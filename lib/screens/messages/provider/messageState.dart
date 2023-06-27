@@ -1,0 +1,4 @@
+
+class MessagesState {
+  List chat = [];
+}

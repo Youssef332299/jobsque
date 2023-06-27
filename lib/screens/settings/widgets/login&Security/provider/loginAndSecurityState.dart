@@ -1,0 +1,4 @@
+
+class LoginAndSecurityState {
+  var email = "";
+}
