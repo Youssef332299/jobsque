@@ -1,29 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:jobsque/screens/home/widgets/SearchScreen/provider/searchProvider.dart';
-import 'package:jobsque/screens/home/widgets/SearchScreen/provider/searchState.dart';
+import 'package:jobsque/screens/home/provider/homeProvder.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../Core/app_colors.dart';
 
-
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
-
-
-  @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-
-  SearchState state = SearchState();
-
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,24 +38,19 @@ class _SearchScreenState extends State<SearchScreen> {
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(color: Colors.black12)),
                     child: TextField(
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Iconsax.search_normal_1,
-                            color: Colors.black87,
-                            size: 22,
-                          ),
-                          hintText: "Type something...",
-                          border: InputBorder.none),
-                      autofocus: true,
-                      controller: state.searchValueController,
-                      onEditingComplete: (){
-                        if(state.searchValueController.text.isNotEmpty) {
-                          addToHistory(state.searchValueController.text);
-                          Navigator.of(context)
-                              .pushNamedAndRemoveUntil("searchResults", (route) => false);
+                        decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Iconsax.search_normal_1,
+                              color: Colors.black87,
+                              size: 22,
+                            ),
+                            hintText: "Type something...",
+                            border: InputBorder.none),
+                        autofocus: true,
+                        controller: context.watch<HomeProvider>().state.searchValueController,
+                        onEditingComplete: (){
+                          context.read<HomeProvider>().onEditingComplete(context);
                         }
-                      }
-                      // onChanged: (value){
                     ),
                   ),
                 ],
@@ -103,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: double.infinity,
                     child: Expanded(
                       child: ListView.builder(
-                        itemCount: state.searchList.length,
+                        itemCount: context.watch<HomeProvider>().state.searchList.length,
                         itemBuilder: (context, i) {
                           return Column(
                             children: [
@@ -122,17 +100,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ),
                                   InkWell(
                                     onTap:(){
-                                      setState(() {
-                                        addToResult(state.searchList[i]);
-                                      });
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil("searchResults", (route) => false);
-                                      },
+                                        context.read<HomeProvider>().
+                                        addToResult(Provider.of<HomeProvider>(
+                                            context, listen: false).state.searchList[i],context);
+                                    },
                                     child: SizedBox(
                                       width: 280,
                                       height: 20,
                                       child: Text(
-                                        state.searchList[i],
+                                        context.watch<HomeProvider>().state.searchList[i],
                                         style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500),
@@ -141,7 +117,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ),
                                   IconButton(
                                       onPressed: () {
-                                        deleteFromHistory(state.searchList[i]);},
+                                        context.read<HomeProvider>().deleteFromHistory(Provider.of<HomeProvider>
+                                          (context, listen: false).state.searchList[i]);},
                                       icon: const Icon(
                                         Iconsax.close_circle,
                                         size: 24,
@@ -178,9 +155,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: double.infinity,
                     child: Expanded(
                       child: ListView.builder(
-                        itemCount: state.suggestions.length,
+                        itemCount: context.watch<HomeProvider>().state.suggestions.length,
                         itemBuilder: (context, i) {
-                          state.suggestions[i];
+                          context.watch<HomeProvider>().state.suggestions[i];
                           return Column(
                             children: [
                               Row(
@@ -200,7 +177,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     width: 280,
                                     height: 20,
                                     child: Text(
-                                      state.suggestions[i],
+                                      context.watch<HomeProvider>().state.suggestions[i],
                                       style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500),
@@ -208,10 +185,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ),
                                   IconButton(
                                       onPressed: (){
-                                        setState(() {
-                                          addToResult(state.suggestions[i]);});
-                                            Navigator.of(context)
-                                             .pushNamedAndRemoveUntil("searchResults", (route) => false);
+                                        context.read<HomeProvider>().
+                                        addToResult(Provider.of<HomeProvider>(
+                                            context, listen: false).state.suggestions[i],context);
                                       },
                                       icon: Icon(
                                         Iconsax.arrow_right_2,
