@@ -19,11 +19,14 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget> {
   void initState() {
     super.initState();
     context.read<HomeProvider>().returnResult();
+    context.read<HomeProvider>().searchJob();
+    // context.read<HomeProvider>().searchJob();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -69,9 +72,8 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget> {
                       const SizedBox(width: 5,),
                       IconButton(
                           onPressed: () {
-                            // context.watch<HomeProvider>().state.searchValueController.
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                Routes.search, (route) => false);},
+                            context.read<HomeProvider>().removeJobId(Provider.of<HomeProvider>(context, listen: false).state.searchValueController.text);
+                            Navigator.of(context).pushNamedAndRemoveUntil(Routes.search, (route) => false);},
                           icon: const Icon(
                             Iconsax.close_circle,
                             size: 20,
@@ -139,1146 +141,249 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget> {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 40,
-              margin: const EdgeInsets.only(top: 20),
-              decoration: BoxDecoration(
-                  color: AppColors.neutral100,
-                  border: Border.all(color: AppColors.neutral200)),
-              child: const Row(
-                children: [
-                  SizedBox(
-                    width: 15,
+                 context.watch<HomeProvider>().state.searchFilter.isEmpty
+                 ?Column(
+                    children: [
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      SizedBox(
+                        child: Image.asset(
+                          "assets/images/not found/not found.PNG",
+                          scale: 3.9,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Center(
+                        child: Text(
+                          "Search not found",
+                          style: TextStyle(
+                              fontSize: 27, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: Text(
+                          "Try searching with different keywords so",
+                          style: TextStyle(
+                              fontSize: 16, color: AppColors.neutral500),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Center(
+                        child: Text(
+                          "we can show you",
+                          style: TextStyle(
+                              fontSize: 16, color: AppColors.neutral500),
+                        ),
+                      ),
+                    ],
+                  )
+                 :Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 40,
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                      color: AppColors.neutral100,
+                      border: Border.all(color: AppColors.neutral200)),
+                  child: const Row(
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        "Recent searches",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Recent searches",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 750,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: [
-                  SizedBox(
-                      width: 360,
-                      height: 110,
-                      child: Column(
-                        children: [
-                          Row(
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 750,
+                  child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemCount: context.watch<HomeProvider>().state.searchFilter.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                          width: 360,
+                          height: 120,
+                          child: Column(
                             children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
+                              Row(
                                 children: [
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        height: 45,
+                                        width: 45,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white),
+                                        child: Image.asset(
+                                          "assets/images/vector/discord-mascot.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ), //Image
+                                  const Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        " Senior UX Designer",
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black87),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "    Discord • Jakarta, Indonesia",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black45),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 72,
+                                  ),
+                                  Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Iconsax.archive_minus,
+                                          )),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 20),
                                   Container(
-                                    height: 45,
-                                    width: 45,
+                                    height: 30,
+                                    width: 70,
+                                    alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/twitte/twitte7.png",
-                                      scale: 11,
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: Colors.blueAccent.shade100),
+                                    child: const Text(
+                                      "Fulltime",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
                                     ),
                                   ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UI Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Twitter • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 80,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //1
-                  const Divider(
-                    height: 9,
-                    thickness: 2,
-                    endIndent: 20,
-                    indent: 20,
-                  ),
-                  SizedBox(
-                      width: 360,
-                      height: 120,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  const SizedBox(width: 5),
                                   Container(
-                                    height: 45,
-                                    width: 45,
+                                    height: 30,
+                                    width: 70,
+                                    alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/vector/discord-mascot.png",
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: Colors.blueAccent.shade100),
+                                    child: const Text(
+                                      "Remote",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
                                     ),
                                   ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UX Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Discord • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 72,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //2
-                  SizedBox(
-                      width: 360,
-                      height: 110,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
+                                  const SizedBox(width: 5),
                                   Container(
-                                    height: 45,
-                                    width: 45,
+                                    height: 30,
+                                    width: 60,
+                                    alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/twitte/twitte7.png",
-                                      scale: 11,
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: Colors.blueAccent.shade100),
+                                    child: const Text(
+                                      "Senior",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
                                     ),
                                   ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UI Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Twitter • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 80,
-                              ),
-                              Column(
-                                children: [
                                   const SizedBox(
-                                    height: 10,
+                                    width: 18,
                                   ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
+                                  const Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text(
+                                        "12K-15K",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.green),
+                                      ),
+                                    ],
+                                  ),
+                                  const Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        "/Month",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black26),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //1
-                  const Divider(
-                    height: 9,
-                    thickness: 2,
-                    endIndent: 20,
-                    indent: 20,
-                  ),
-                  SizedBox(
-                      width: 360,
-                      height: 120,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/vector/discord-mascot.png",
-                                    ),
-                                  ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UX Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Discord • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 72,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //2
+                          ));
+                    },
 
-                  const Divider(
-                    height: 9,
-                    thickness: 2,
-                    endIndent: 20,
-                    indent: 20,
-                  ),
-                  SizedBox(
-                      width: 360,
-                      height: 120,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/vector/discord-mascot.png",
-                                    ),
-                                  ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UX Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Discord • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 72,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //2
-                  SizedBox(
-                      width: 360,
-                      height: 110,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/twitte/twitte7.png",
-                                      scale: 11,
-                                    ),
-                                  ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UI Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Twitter • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 80,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //1
-                  const Divider(
-                    height: 9,
-                    thickness: 2,
-                    endIndent: 20,
-                    indent: 20,
-                  ),
-                  SizedBox(
-                      width: 360,
-                      height: 120,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Image.asset(
-                                      "assets/images/vector/discord-mascot.png",
-                                    ),
-                                  ),
-                                ],
-                              ), //Image
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    " Senior UX Designer",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "    Discord • Jakarta, Indonesia",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black45),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 72,
-                              ),
-                              Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Iconsax.archive_minus,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Fulltime",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 70,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Remote",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 30,
-                                width: 60,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.blueAccent.shade100),
-                                child: const Text(
-                                  "Senior",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    "12K-15K",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "/Month",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black26),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )), //2
-                ],
-              ),
-            ),
 
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        height: 9,
+                        thickness: 2,
+                        endIndent: 20,
+                        indent: 20,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

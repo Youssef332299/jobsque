@@ -188,6 +188,9 @@ class SearchScreen extends StatelessWidget {
                                         context.read<HomeProvider>().
                                         addToResult(Provider.of<HomeProvider>(
                                             context, listen: false).state.suggestions[i],context);
+                                        context.read<HomeProvider>().
+                                        addToHistory(Provider.of<HomeProvider>(
+                                            context, listen: false).state.suggestions[i]);
                                       },
                                       icon: Icon(
                                         Iconsax.arrow_right_2,

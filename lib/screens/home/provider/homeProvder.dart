@@ -173,13 +173,6 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  removeJobId(jobId) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.remove("$jobId");
-    print("removeJobId: $jobId");
-    notifyListeners();
-  }
-
   setResult(result) async {
     print("saved in cash 2 $result");
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -193,6 +186,13 @@ class HomeProvider extends ChangeNotifier {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setStringList("searchList", history);
     state.searchList = history;
+  }
+
+  returnDataToHistory() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    state.searchList = sharedPreferences.getStringList("searchList")!;
+    state.history = state.searchList;
+    notifyListeners();
   }
 
   getSearchList() async {
@@ -223,11 +223,11 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  returnDataToHistory() async {
+  removeJobId(jobId) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      state.searchList = sharedPreferences.getStringList("searchList")!;
-      state.history = state.searchList;
-      notifyListeners();
+    await sharedPreferences.remove("$jobId");
+    print("removeJobId: $jobId");
+    notifyListeners();
   }
 
   onEditingComplete(context){
@@ -240,8 +240,30 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  // searchResults__________________________________________________________________
+  Future<void> searchJob() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString("token");
 
+    final response = await http.get(Uri.parse(UrlRoutes.searchJob),
+        headers: {'Authorization': 'Bearer $token'},);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      Map<String, dynamic> searchResults = Map<String, dynamic>.from(data);
+      List<Map> filterSearch = [];
+      for(int i = 0; i < data.length; i++) {
+        filterSearch.add(data["data"][i]);
+      }
+      state.searchFilter = filterSearch;
+      print(data);
+      print(searchResults);
+    }
+
+  }
+
+
+  // searchResults__________________________________________________________________
 
   void showBottomSheet2(context) {
     showModalBottomSheet(
@@ -656,7 +678,7 @@ class HomeProvider extends ChangeNotifier {
                       const Center(child: Icon(Iconsax.dollar_circle)),
                       const SizedBox(width: 10,),
                       SizedBox(
-                        width: 300,
+                        width: 290,
                         child: DropdownButtonFormField(
                           isExpanded: true,
                           isDense: true,
@@ -966,5 +988,22 @@ class HomeProvider extends ChangeNotifier {
       state.jobTittleController.text = state.result;
       notifyListeners();
   }
+
+  Future<void> filterSearch() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString("token");
+
+    final response = await http.get(Uri.parse(UrlRoutes.filterSearch),
+      headers: {'Authorization': 'Bearer $token'},);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      Map<String, dynamic> searchResults = Map<String, dynamic>.from(data);
+      print(data);
+      print(searchResults);
+    }
+
+  }
+
 
 }

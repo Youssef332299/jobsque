@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:jobsque/screens/auth/widgets/work/provider/workState.dart';
+import 'package:jobsque/screens/auth/widgets/work/workScreen.dart';
 import '../../../Core/app_colors.dart';
 
 class LocationScreen extends StatefulWidget {
