@@ -110,7 +110,9 @@ flutter:
     - assets/images/Pdf/
     - assets/images/profile-picture/
     - assets/images/language flags/
+    - assets/images/not found/
     - assets/images/dimes profile/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

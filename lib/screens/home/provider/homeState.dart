@@ -23,6 +23,7 @@ class HomeState {
   List<Map> suggested = [];
   List<Map> jobs = [];
   List<Map> favorites = [];
+  List<Map> searchFilter = [];
   List<String> searchList = [];
   List<String> history = [];
   List<String> suggestions = [

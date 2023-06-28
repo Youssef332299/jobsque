@@ -14,7 +14,7 @@ class PageViewProvider extends ChangeNotifier {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? newCostumer = sharedPreferences.getBool("newCostumer");
     if(newCostumer == true){
-      Navigator.of(context).pushNamed(Routes.bottomNavigation);
+      Navigator.of(context).pushNamed(Routes.work);
     }else{
       Navigator.of(context).pushNamed("pageView");
     }

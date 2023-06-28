@@ -1,6 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:iconsax/iconsax.dart';
+
+
 class WorkState {
 
-  late List<bool?> work;
+  List<Map<String, dynamic>> work = [
+    {"icon": const Icon(Iconsax.bezier4), "name": "UI/UX Designer"},
+    {"icon": const Icon(Iconsax.pen_tool4), "name": "Illustrator Designer"},
+    {"icon": const Icon(Iconsax.code4), "name": "Developer"},
+    {"icon": const Icon(Iconsax.graph4), "name": "Management"},
+    {"icon": const Icon(Iconsax.graph4), "name": "Management"},
+    {"icon": const Icon(Iconsax.monitor_mobbile4), "name": "Information Technology"},
+    {"icon": const Icon(Iconsax.cloud_add4), "name": "Research and Analytics"}
+  ];
+  List<Map<String, dynamic>> worksSelected = [];
 
   bool isSelected13 = false;
   bool isSelected12 = false;
@@ -16,3 +29,5 @@ class WorkState {
   bool isSelected2 = false;
   bool isSelected = false;
 }
+
+
