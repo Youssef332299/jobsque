@@ -128,7 +128,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          context.read<ProfileProvider>().addNewFile(context);
+                          setState(() {
+                            context.read<ProfileProvider>().addNewFile(context);
+                          });
                         },
                         child: Container(
                           height: 45,

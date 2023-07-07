@@ -4,13 +4,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Data/core/urlRoutes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../home/provider/homeProvder.dart';
 
 
 class ProfileProvider extends ChangeNotifier{
@@ -93,7 +91,6 @@ class ProfileProvider extends ChangeNotifier{
     image = File(myfile!.path);
     dynamic newImage = image;
     saveImageToSharedPreferences(newImage);
-    print(newImage);
     notifyListeners();
   }
 
@@ -121,13 +118,10 @@ class ProfileProvider extends ChangeNotifier{
       'address': address,
       'mobile': mobile,
     };
-    var editProfileBody = jsonEncode(editProfileData);
     http.Response response = await http.put(Uri.parse(UrlRoutes.editProfile),
         body: editProfileData,
         headers: {'Authorization': 'Bearer $token'}
     );
-    print(response.statusCode);
-    print(editProfileBody);
 
     if(response.statusCode == 200 ){
       Navigator.of(context).pop();
@@ -160,33 +154,33 @@ class ProfileProvider extends ChangeNotifier{
     PlatformFile file = resultFile!.files.first;
 
     int index = state.pdfFilesList.length;
-    double size = file.size / 1000;
-    int finalSize = size.toInt();
-    dynamic fileName = file.name;
-    dynamic filePath = file.path;
+
     Map fileData= {
-      "name": "$fileName",
-      "size": "$finalSize",
-      "path": "$filePath",
+      "name": "${file.name}",
+      "size": "${file.size}",
+      "path": "${file.path}",
     };
-    String PDF = json.encode(fileData);
+    String PDF = jsonEncode(fileData);
 
 
     if (file.size < 10000001) { //10 MB
-
-     print("its called");
 
       var url = Uri.parse(UrlRoutes.addPortfolio);
       var request = http.MultipartRequest('POST', url);
 
       request.headers.addAll({'Authorization': 'Bearer $token'});
-      request.fields['name'] = fileName;
-      request.files.add(await http.MultipartFile.fromPath('cv_file', filePath));
+      request.fields['name'] = file.name;
+      request.files.add(await http.MultipartFile.fromPath('cv_file', "${file.path}"));
       var response = await request.send();
 
          if (response.statusCode == 200) {
              sharedPreferences.setString('PDF[$index]', PDF);
-             state.pdfFilesList.add(fileData);
+               state.pdfFilesList.add(fileData);
+
+               Navigator.of(context).pop();
+             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                 content: Text("File added successfully")));
+
          }else {
            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                content: Text("Error..  max file size 10 MB")));
@@ -195,21 +189,15 @@ class ProfileProvider extends ChangeNotifier{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Error..  max file size 10 MB")));
     }
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> getFileData() async {
     final prefs = await SharedPreferences.getInstance();
     for(int i = 0; i <= state.pdfFilesList.length; i++){
       String PDF = prefs.getString('PDF[$i]')!;
-      Map<String, dynamic> PDFmap = json.decode(PDF);
-      // if(!state.pdfFilesList.contains(PDFmap)){
+      Map<String, dynamic> PDFmap = jsonDecode(PDF);
       state.pdfFilesList.add(PDFmap);
-      print(PDFmap);
-      print("state.pdfFilesList.length: ${state.pdfFilesList.length}");
-      print("state.pdfFilesList: ${state.pdfFilesList}");
-
-      // }
     }
     notifyListeners();
   }
@@ -229,7 +217,6 @@ class ProfileProvider extends ChangeNotifier{
       state.isEditing.add(false);
     }
     notifyListeners();
-    print("fill_isEditing_list: ${state.isEditing}");
   }
 
   onTapEditCV_name(i){
@@ -298,14 +285,12 @@ class ProfileProvider extends ChangeNotifier{
   onSearch(){}
 
   void onTapIconArrow(i){
-    print(i);
 
     if(state.isOpened[i] == false){
       state.isOpened[i] = true;
-      print(state.isOpened[i]);
+
     }else if(state.isOpened[i] == true){
       state.isOpened[i] = false;
-      print(state.isOpened[i]);
     }
     notifyListeners();
   }

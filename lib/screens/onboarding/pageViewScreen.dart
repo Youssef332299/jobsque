@@ -30,7 +30,8 @@ class PageViewScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed("createAccount");
+                  context.read<PageViewProvider>().setBool();
+                  Navigator.of(context).pushNamed("login");
                 },
                 child: const Text(
                   "Skip",
