@@ -29,7 +29,7 @@ class ProfileState {
 
 
   List<bool> isOpened = List.filled(6, false);
-  List<dynamic> pdfFilesList = [];
+  List<Map> pdfFilesList = [];
   List<bool> isEditing = [];
 
 }
