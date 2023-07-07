@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
+import 'package:jobsque/screens/settings/provider/profileProvider.dart';
+import 'package:jobsque/screens/settings/widgets/login&Security/provider/LoginAndSecurityProvider.dart';
+import 'package:provider/provider.dart';
 import '../../../../Core/app_colors.dart';
+
 
 class LoginAndSecurityScreen extends StatelessWidget {
   const LoginAndSecurityScreen({super.key});
@@ -11,7 +14,6 @@ class LoginAndSecurityScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-
           const SizedBox(
             height: 40,
           ),
@@ -22,7 +24,7 @@ class LoginAndSecurityScreen extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed("profile");
+                    Navigator.of(context).pop();
                   },
                   icon: const Icon(Iconsax.arrow_left)),
               const SizedBox(
@@ -73,18 +75,28 @@ class LoginAndSecurityScreen extends StatelessWidget {
                 width: 20,
               ),
               const SizedBox(
-                width: 162,
+                width: 120,
                 child: Text(
                   "Email address",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
               ),
-              SizedBox(width: 160,height: 18,child: Text("Routes.email",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: AppColors.neutral500),)),
+              Container(
+                  alignment: Alignment.centerRight,
+                  width: 200,
+                  height: 18,
+                  child: Text(
+                    context.watch<LoginAndSecurityProvider>().state.email,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.neutral500),
+                  )),
               IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("emailAddress");
-                  },
-                  icon: const Icon(Iconsax.arrow_right_1),
+                onPressed: () {
+                  Navigator.of(context).pushNamed("emailAddress");
+                },
+                icon: const Icon(Iconsax.arrow_right_1),
               )
             ],
           ),
@@ -106,13 +118,23 @@ class LoginAndSecurityScreen extends StatelessWidget {
                 width: 20,
               ),
               const SizedBox(
-                width: 162,
+                width: 120,
                 child: Text(
                   "Phone number",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
               ),
-              SizedBox(width: 160,height: 18,child: Text("Routes.email",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: AppColors.neutral500),)),
+              Container(
+                alignment: Alignment.centerRight,
+                  width: 200,
+                  height: 18,
+                  child: Text(
+                    context.watch<ProfileProvider>().state.mobileController.text,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.neutral500),
+                  )),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed("phoneNumber");
@@ -144,7 +166,10 @@ class LoginAndSecurityScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
               ),
-              SizedBox(width: 160,height: 18,child: Text("Routes.email",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: AppColors.neutral500),)),
+              const SizedBox(
+                  width: 160,
+                  height: 18,
+              ),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed("changePassword");
@@ -176,7 +201,10 @@ class LoginAndSecurityScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
               ),
-              SizedBox(width: 160,height: 18,child: Text("Routes.email",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: AppColors.neutral500),)),
+              const SizedBox(
+                  width: 160,
+                  height: 18,
+              ),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed("two_stepVerification");
@@ -208,10 +236,13 @@ class LoginAndSecurityScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
               ),
-              SizedBox(width: 160,height: 18,child: Text("Routes.email",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: AppColors.neutral500),)),
+              const SizedBox(
+                  width: 160,
+                  height: 18,
+              ),
               IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed("");
+                    // Navigator.of(context).pushNamed("");
                   },
                   icon: const Icon(Iconsax.arrow_right_1)),
             ],
@@ -224,7 +255,6 @@ class LoginAndSecurityScreen extends StatelessWidget {
             indent: 20,
             thickness: 1.5,
           ),
-
         ],
       ),
     );

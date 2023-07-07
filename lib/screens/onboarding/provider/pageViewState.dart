@@ -5,8 +5,6 @@ import '../widgets/onboardingScreen.dart';
 
 class PageViewState {
 
-  // pageView______________________________________________
-
   int pageIndex = 0;
 
   PageController scroll = PageController(initialPage: 0);

@@ -21,7 +21,7 @@ class SetupWidget extends StatelessWidget {
           
           SizedBox(
             width: double.infinity,
-            child: Image.asset("assets/images/createAccount/Create account logo.png"),
+            child: Image.asset("assets/images/created Successfully/createdSuccessfully.png"),
           ), //image
           
           const SizedBox(height: 30,),
@@ -42,7 +42,7 @@ class SetupWidget extends StatelessWidget {
             alignment: Alignment.center,
             child: const Text("preferences",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 14),),
           ),
-          const SizedBox(height: 340,),
+          const SizedBox(height: 220,),
           
           SizedBox(
             width: 345,
