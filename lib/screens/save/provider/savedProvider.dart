@@ -9,46 +9,9 @@ import '../../../Data/core/urlRoutes.dart';
 
 
 class SavedProvider extends ChangeNotifier {
-
-  void init() {
-    showAllFavorite();
-    loadIconSuggest();
-  }
-
   SavedState state = SavedState();
 
-  Future<void> loadIconSuggest() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<bool?> icons = [];
-    for (int i = 0; i < 10; i++) {
-      bool? icon = prefs.getBool('icon$i');
-      icons.add(icon ?? false);
-    }
-    state.iconFavorites = icons;
-    notifyListeners();
-  }
-
-  Future<void> showAllFavorite() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? token = sharedPreferences.getString("token");
-
-    var response = await http.get(Uri.parse(UrlRoutes.showAllFavorites),
-        headers: {'Authorization': 'Bearer $token'});
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      print("data: $data");
-      Map<String, dynamic> showAllFavorite = Map<String, dynamic>.from(data);
-      state.showAllFavorites = showAllFavorite["data"];
-
-      print("showAllFavorites: ${showAllFavorite["data"]}");
-      print("showAllFavorites: ${state.showAllFavorites}");
-    } else {
-      print("showAllFavorites status: ${response.statusCode}");
-    }
-    notifyListeners();
-  }
-
-  Future<void> applyJob(jobId, context) async {
+  Future<void> applyJob(jobId,context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString("mobileValue", "01093264806");
     await sharedPreferences.setString("cv_fileValue", "01093264806");
@@ -64,7 +27,7 @@ class SavedProvider extends ChangeNotifier {
 
     var response = await http.post(Uri.parse(UrlRoutes.apply),
         body: {
-          "user_id": "$id",
+      "user_id": "$id",
           "job_id": "$jobId",
           "name": "$name",
           "email": "$email",
@@ -91,12 +54,11 @@ class SavedProvider extends ChangeNotifier {
     } else {
       print("Apply Job status: ${response.statusCode}");
     }
-    notifyListeners();
   }
 
-  void showBottomSheet2(context, jobId) {
+  void showBottomSheet2(context,jobId) {
     showModalBottomSheet(
-      // isScrollControlled: true,
+        // isScrollControlled: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
@@ -122,21 +84,7 @@ class SavedProvider extends ChangeNotifier {
                 ),
                 InkWell(
                   onTap: () {
-                    // Provider.of<HomeProvider>(context, listen: false)
-                    //     .goToApplyNow(
-                    //     id,
-                    //     name,
-                    //     job_time_type,
-                    //     job_level,
-                    //     job_description,
-                    //     job_skill,
-                    //     comp_name,
-                    //     comp_email,
-                    //     comp_website,
-                    //     about_comp,
-                    //     location,
-                    //     context);
-                    // notifyListeners();
+                    applyJob(jobId,context);
                   },
                   child: Container(
                     height: 55,

@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:jobsque/screens/onboarding/provider/pageViewState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:async';
+
 import '../../../Core/routes.dart';
+
 
 class PageViewProvider extends ChangeNotifier {
   PageViewState state = PageViewState();
@@ -11,21 +11,12 @@ class PageViewProvider extends ChangeNotifier {
   //  splash_______________________________________
 
   Future newCostumer(context) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? newCostumer = sharedPreferences.getBool("newCostumer");
-
-    try { // to check internet
-      var result = await InternetAddress.lookup("google.com");
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) { // If Is Online
-        if (newCostumer == true) {
-          Navigator.of(context).pushNamed(Routes.bottomNavigation);
-        } else {
-          Navigator.of(context).pushNamed("pageView");
-        }
-      }
-    } on SocketException catch (_) { // If user have no internet
-      Navigator.of(context).pushNamed("checkNetwork");
+    if(newCostumer == true){
+      Navigator.of(context).pushNamed(Routes.work);
+    }else{
+      Navigator.of(context).pushNamed("pageView");
     }
   }
 
@@ -36,26 +27,25 @@ class PageViewProvider extends ChangeNotifier {
 
   //  pageView_______________________________________
 
-  onTap(context) {
+  onTap(context){
     if (state.pageIndex < 2) {
-      state.scroll.nextPage(
+          state.scroll.nextPage(
           duration: const Duration(milliseconds: 300),
           curve: Curves.decelerate);
     } else {
       setBool();
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("createAccount", (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          "createAccount", (route) => false);
     }
   }
 
-  changeIndex(index) {
+  changeIndex(index){
     state.pageIndex = index;
     notifyListeners();
   }
 
   setBool() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    await sharedPreferences.setBool("newCostumer", true);
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool("newCostumer",true);
   }
 }

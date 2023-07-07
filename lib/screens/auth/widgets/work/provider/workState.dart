@@ -1,81 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:iconsax/iconsax.dart';
 
 
 class WorkState {
 
-  List<Map<String, dynamic>> worksSelected = [];
-  Map<String, Map<String, dynamic>> selectedCountries = {};
-
-  List<bool> isSelected = List.filled(13, false);
-
-
   List<Map<String, dynamic>> work = [
-    {"icon": Iconsax.bezier4, "name": "UI/UX Designer"},
-    {"icon": Iconsax.pen_tool4, "name": "Illustrator Designer"},
-    {"icon": Iconsax.code4, "name": "Developer"},
-    {"icon": Iconsax.graph4, "name": "Management"},
+    {"icon": const Icon(Iconsax.bezier4), "name": "UI/UX Designer"},
+    {"icon": const Icon(Iconsax.pen_tool4), "name": "Illustrator Designer"},
+    {"icon": const Icon(Iconsax.code4), "name": "Developer"},
+    {"icon": const Icon(Iconsax.graph4), "name": "Management"},
+    {"icon": const Icon(Iconsax.graph4), "name": "Management"},
+    {"icon": const Icon(Iconsax.monitor_mobbile4), "name": "Information Technology"},
+    {"icon": const Icon(Iconsax.cloud_add4), "name": "Research and Analytics"}
   ];
-  List<Map<String, dynamic>> work2 = [
-    {"icon": Iconsax.monitor_mobbile4, "name": "Information\n Technology"},
-    {"icon": Iconsax.cloud_add4, "name": "Research and\n Analytics"}
-  ];
+  List<Map<String, dynamic>> worksSelected = [];
 
-  // Map<String, Map<String, String>> countries =
-  //   {
-  //     "us": {
-  //       "name": "United States",
-  //       "image": "assets/images/flags/Ellipse 804.png"
-  //     },
-  //     "malaysia": {
-  //       "name": "Malaysia",
-  //       "image": "assets/images/flags/2.png"
-  //     },
-  //     "singapore": {
-  //       "name": "Singapore",
-  //       "image": "assets/images/flags/Singapore.png"
-  //     },
-  //     "indonesia": {
-  //       "name": "Indonesia",
-  //       "image": "assets/images/flags/Indonesia.png"
-  //     },
-  //     "philippines": {
-  //       "name": "Philippines",
-  //       "image": "assets/images/flags/Philiphines.png"
-  //     },
-  //     "poland": {
-  //       "name": "Poland",
-  //       "image": "assets/images/flags/Polandia.png"
-  //     },
-  //     "india": {
-  //       "name": "India",
-  //       "image": "assets/images/flags/India.png"
-  //     },
-  //     "vietnam": {
-  //       "name": "Vietnam",
-  //       "image": "assets/images/flags/Vietnam.png"
-  //     },
-  //     "china": {
-  //       "name": "China",
-  //       "image": "assets/images/flags/China.png"
-  //     },
-  //     "canada": {
-  //       "name": "Canada",
-  //       "image": "assets/images/flags/Canada.png"
-  //     },
-  //     "saudi": {
-  //       "name": "Saudi Arabia",
-  //       "image": "assets/images/flags/Saudi Arabia.png"
-  //     },
-  //     "argentina": {
-  //       "name": "Argentina",
-  //       "image": "assets/images/flags/Argentina.png"
-  //     },
-  //     "brazil": {
-  //       "name": "Brazil",
-  //       "image": "assets/images/flags/Brazil.png"
-  //     },
-  //   };
-
+  bool isSelected13 = false;
+  bool isSelected12 = false;
+  bool isSelected11 = false;
+  bool isSelected10 = false;
+  bool isSelected9 = false;
+  bool isSelected8 = false;
+  bool isSelected7 = false;
+  bool isSelected6 = false;
+  bool isSelected5 = false;
+  bool isSelected4 = false;
+  bool isSelected3 = false;
+  bool isSelected2 = false;
+  bool isSelected = false;
 }
 
 

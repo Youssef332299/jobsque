@@ -38,7 +38,7 @@ class _LangaugeScreenState extends State<LangaugeScreen> {
                 ),
                 IconButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed("profile");
                     },
                     icon: const Icon(Iconsax.arrow_left)),
               ],

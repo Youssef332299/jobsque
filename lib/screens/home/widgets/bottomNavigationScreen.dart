@@ -1,45 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:jobsque/screens/home/provider/homeProvder.dart';
-import 'package:provider/provider.dart';
+
 import '../../../Core/app_colors.dart';
+import '../../Messages/MessagesScreen.dart';
+import '../../applied/appliedScreen.dart';
+import '../homeScreen.dart';
+import '../../save/savedScreen.dart';
+import '../../settings/profileScreen.dart';
 
 
-class BottomNavigationScreen extends StatelessWidget {
-  const BottomNavigationScreen({super.key});
+
+class BottomNavigationScreen extends StatefulWidget {
+  const BottomNavigationScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BottomNavigationScreen> createState() => _BottomNavigationScreenState();
+}
+
+class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
+
+  List<Widget> pages = [
+    const HomeScreen(),
+    const MessageScreen(),
+    const AppliedScreen(),
+    const SavedScreen(),
+    ProfileScreen()
+  ];
+  int indexSelect = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
-        // elevation: 0.0,
-        // fixedColor: Colors.white,
-        enableFeedback: true,
-        backgroundColor: Colors.blueAccent,
         showUnselectedLabels: true,
-        unselectedItemColor: AppColors.neutral400,
+        // enableFeedback: false,
+        unselectedItemColor: Colors.grey,
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
         selectedItemColor: AppColors.primary500,
-        currentIndex: context.watch<HomeProvider>().state.indexSelect,
+        // selectedIconTheme: IconThemeData(),
+        currentIndex: indexSelect,
         onTap: (index) {
-          context.read<HomeProvider>().onTapBottomNavigation(index);
+          setState(() {
+            indexSelect = index;
+          });
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Iconsax.home4), activeIcon: Icon(Iconsax.home_15), label: "Home"),
+              icon: Icon(Iconsax.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Iconsax.message4), activeIcon: Icon(Iconsax.message5),label: "Messages"),
+            icon: Icon(Iconsax.message), label: "Messages",),
           BottomNavigationBarItem(
-              icon: Icon(Iconsax.briefcase4), activeIcon: Padding(padding: EdgeInsets.only(left: 25),child: Icon(Iconsax.briefcase5),), label: "Applied"),
+              icon: Icon(Iconsax.briefcase), label: "Applied"),
           BottomNavigationBarItem(
-              icon: Icon(Iconsax.archive_minus4), activeIcon: Icon(Iconsax.archive_15), label: "Saved"),
+              icon: Icon(Iconsax.archive_minus), label: "Saved"),
           BottomNavigationBarItem(
-              icon: Icon(Iconsax.frame_1), activeIcon: Icon(Iconsax.frame5), label: "Profile")
+              icon: Icon(Iconsax.frame_1), label: "Profile"),
         ],
       ),
-      body:context.watch<HomeProvider>().state.pages[context.watch<HomeProvider>().state.indexSelect],
+      body:pages[indexSelect],
     );
   }
 }
+

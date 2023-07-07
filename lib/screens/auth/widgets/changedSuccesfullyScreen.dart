@@ -16,7 +16,10 @@ class ChangedSuccesfullyScreen extends StatelessWidget {
               height: 190,
             ),
             Center(
-              child: Image.asset("assets/images/created Successfully/createdSuccessfully.png"),
+              child: Image.asset(
+                "assets/images/Password Check/img_1.png",
+                scale: 2.8,
+              ),
             ),
             const SizedBox(
               height: 10,

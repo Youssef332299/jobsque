@@ -3,33 +3,26 @@ import 'package:jobsque/screens/Messages/Widgets/UnreadWidget.dart';
 import 'package:jobsque/screens/Messages/Widgets/chatWidget.dart';
 import 'package:jobsque/screens/Messages/provider/MessagesProvider.dart';
 import 'package:jobsque/screens/applied/appliedScreen.dart';
-import 'package:jobsque/screens/applied/provider/appliedProvider.dart';
-import 'package:jobsque/screens/applied/widgets/completeProfile.dart';
-import 'package:jobsque/screens/applied/widgets/education.dart';
-import 'package:jobsque/screens/applied/widgets/experience.dart';
+import 'package:jobsque/screens/applied/widgets/applySuccesfullyWidget.dart';
+import 'package:jobsque/screens/applied/widgets/bioDataWidget.dart';
+import 'package:jobsque/screens/applied/widgets/companyWidget.dart';
+import 'package:jobsque/screens/applied/widgets/desicriptionWidget.dart';
+import 'package:jobsque/screens/applied/widgets/peopleWidget.dart';
+import 'package:jobsque/screens/applied/widgets/typeOfWorkWidget.dart';
+import 'package:jobsque/screens/applied/widgets/uploadPortfolioWidget.dart';
 import 'package:jobsque/screens/auth/createAccontScreen.dart';
 import 'package:jobsque/screens/auth/provider/createAccountProvider.dart';
 import 'package:jobsque/screens/auth/widgets/forgetPasswordScreen.dart';
 import 'package:jobsque/screens/auth/widgets/changedSuccesfullyScreen.dart';
 import 'package:jobsque/screens/auth/widgets/checkEmailScreen.dart';
 import 'package:jobsque/screens/auth/widgets/createPasswordScreen.dart';
-import 'package:jobsque/screens/auth/widgets/work/widgets/locationWidget.dart';
+import 'package:jobsque/screens/auth/widgets/locationWidget.dart';
 import 'package:jobsque/screens/auth/widgets/setupWidget.dart';
-import 'package:jobsque/screens/auth/widgets/work/provider/workProvider.dart';
 import 'package:jobsque/screens/auth/widgets/work/workScreen.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/provider/applyNowProvider.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/applySuccesfullyWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/bioDataWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/companyWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/desicriptionWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/peopleWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/typeOfWorkWidget.dart';
-import 'package:jobsque/screens/home/widgets/applyButton/widgets/uploadPortfolioWidget.dart';
 import 'package:jobsque/screens/home/widgets/bottomNavigationScreen.dart';
 import 'package:jobsque/screens/home/homeScreen.dart';
 import 'package:jobsque/screens/home/provider/homeProvder.dart';
 import 'package:jobsque/screens/home/widgets/SearchNotFoundWidget.dart';
-import 'package:jobsque/screens/home/widgets/notification.dart';
 import 'package:jobsque/screens/home/widgets/searchScreen.dart';
 import 'package:jobsque/screens/home/widgets/searchResultsWidget.dart';
 import 'package:jobsque/screens/onboarding/pageViewScreen.dart';
@@ -43,7 +36,6 @@ import 'package:jobsque/screens/save/savedScreen.dart';
 import 'package:jobsque/screens/settings/profileScreen.dart';
 import 'package:jobsque/screens/settings/provider/profileProvider.dart';
 import 'package:jobsque/screens/settings/widgets/AccesibilityScreen.dart';
-import 'package:jobsque/screens/settings/widgets/EditAboutWidget.dart';
 import 'package:jobsque/screens/settings/widgets/EditProfileScreen.dart';
 import 'package:jobsque/screens/settings/widgets/HelpCenterScreen.dart';
 import 'package:jobsque/screens/settings/widgets/LangaugeScreen.dart';
@@ -60,10 +52,8 @@ import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_step
 import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_stepVerificationScreen2.dart';
 import 'package:jobsque/screens/auth/widgets/loginScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_stepVerificationScreen3.dart';
-import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_stepVerificationScreen4.dart';
-import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_stepVerificationScreen5.dart';
-import 'package:jobsque/screens/onboarding/widgets/checkNetwork.dart';
+import 'package:jobsque/screens/settings/widgets/test.dart';
+import 'package:jobsque/screens/settings/widgets/testProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -80,108 +70,102 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Sizer(builder: (context, orientation, deviceType) {
-
       return MultiProvider(
-
         providers: [
-          ChangeNotifierProvider<LoginAndSecurityProvider>(
-              create: (context) => LoginAndSecurityProvider()..init(context)),
-          ChangeNotifierProvider<CreateAccountProvider>(
-              create: (context) => CreateAccountProvider()..init()),
-          ChangeNotifierProvider<ProfileProvider>(
-              create: (context) => ProfileProvider()..init()),
-          ChangeNotifierProvider<HomeProvider>(
-              create: (context) => HomeProvider()..init(context)),
-          ChangeNotifierProvider<ApplyNowProvider>(
-              create: (context)  => ApplyNowProvider()..init()),
-          ChangeNotifierProvider<MessagesProvider>(
-              create: (context) => MessagesProvider()..init()),
-          ChangeNotifierProvider<AppliedProvider>(
-              create: (context) => AppliedProvider()..init()),
-          ChangeNotifierProvider<SavedProvider>(
-              create: (context)  => SavedProvider()..init()),
+
+          ChangeNotifierProvider<TestProvider>(
+              create: (context) => TestProvider()..getCounter()),
+
           ChangeNotifierProvider<PageViewProvider>(
               create: (context) => PageViewProvider()),
-          ChangeNotifierProvider<WorkProvider>(
-              create: (context) => WorkProvider()),
+
+          ChangeNotifierProvider<CreateAccountProvider>(
+              create: (context) => CreateAccountProvider()..init()),
+
+          ChangeNotifierProvider<MessagesProvider>(
+              create: (context) => MessagesProvider()),
+
+          ChangeNotifierProvider<SavedProvider>(
+              create: (context) => SavedProvider()),
+
+          ChangeNotifierProvider<HomeProvider>(
+              create: (context) => HomeProvider()..init()),
+
+          ChangeNotifierProvider<ProfileProvider>(
+              create: (context) => ProfileProvider()),
+
+          ChangeNotifierProvider<LoginAndSecurityProvider>(
+              create: (context) => LoginAndSecurityProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
 
             routes: {         
-              "checkNetwork": (context) => const CheckNetworkScreen(),
-              "onboarding2": (context) => const Onboarding2Screen(),
-              "getStarted": (context) => const GetStartedScreen(),
-              "onboarding": (context) => const OnboardingScreen(),
               "/": (context) => const SplashWidget(),
 
+              "TestScreen": (context) => TestScreen(),
 
-              "changedSuccessfully": (context) => const ChangedSuccesfullyScreen(),
-              "createPassword": (context) => const CreatePasswordScreen(),
-              "forgetPassword": (context) => const ForgetPasswordScreen(),
-              "checkEmail": (context) => const CheckEmailScreen(),
+              "onboarding": (context) => const OnboardingScreen(),
+              "onboarding2": (context) => const Onboarding2Screen(),
+              "getStarted": (context) => const GetStartedScreen(),
+
+
               "login": (context) => const LoginScreen(),
+              "changedSuccessfully": (context) => const ChangedSuccesfullyScreen(),
+              "checkEmail": (context) => const CheckEmailScreen(),
+              "forgetPassword": (context) => const ForgetPasswordScreen(),
+              "createPassword": (context) => const CreatePasswordScreen(),
 
 
               "createAccount": (context) =>  const CreateAccountScreen(),
+              "account": (context) => const SetupWidget(),
+              "work": (context) => const WorkScreen(),
               "location": (context) => const LocationScreen(),
               "pageView": (context) => const PageViewScreen(),
-              "setup": (context) => const SetupWidget(),
-              "work": (context) => const WorkScreen(),
 
 
               "bottomNavigation": (context) => const BottomNavigationScreen(),
-              "notificationWidget": (context) => const NotificationWidget(),
-              "searchNotFound": (context) => const SearchNotFoundWidget(),
-              "searchResults": (context) => const SearchResultsWidget(),
-              "notification": (context) => NotificationScreen(),
-              "search": (context) => const SearchScreen(),
               "home": (context) => const HomeScreen(),
+              "search": (context) => const SearchScreen(),
+              "searchResults": (context) => const SearchResultsWidget(),
+              "searchNotFound": (context) => const SearchNotFoundWidget(),
 
 
-              "applySuccesfullyWidget": (context) => const ApplySuccesfullyWidget(),
-              "uploadPortfolioWidget": (context) => const UploadPortfolioWidget(),
-              "descriptionWidget":  (context) => const DesicriptionWidget(),
-              "typeOfWorkWidget": (context) =>  const TypeOfWorkWidget(),
-              "companyWidget":  (context) => const CompanyWidget(),
-              "bioDataWidget": (context) => const BioDataWidget(),
+              "applied": (context) => const AppliedScreen(),
+              "descriptionWidget": (context) => const DesicriptionWidget(),
+              "companyWidget": (context) => const CompanyWidget(),
               "peopleWidget": (context) => const PeopleWidget() ,
-
-
-              "completeProfile": (context) => const CompleteProfile(),
-              "applied":   (context)  => const AppliedScreen(),
-              "experience": (context) => const Experience(),
-              "education": (context) => const Education(),
+              "typeOfWorkWidget": (context) =>  const TypeOfWorkWidget(),
+              "bioDataWidget": (context) => const BioDataWidget(),
+              "uploadPortfolioWidget": (context) => const UploadPortfolioWidget(),
+              "applySuccesfullyWidget": (context) => const ApplySuccesfullyWidget(),
 
 
               "saved": (context) => const SavedScreen(),
 
 
-              "unreadWidget": (context) => const UnreadWidget(),
               "messages": (context) => const MessageScreen(),
               "chatWidget": (context) => const ChatWidget(),
+              "unreadWidget": (context) => const UnreadWidget(),
 
 
-              "termsAndConditions": (context) => const TermsAndConditionsScreen(),
-              "privacyPolicy": (context) => const PrivacyPolicyScreen(),
+              "profile": (context) => ProfileScreen(),
+              "accessibility": (context) => AccesibilityScreen(),
               "editProfile": (context) => const EditProfileScreen(),
-              "helpCenter":  (context) => const HelpCenterScreen(),
-              "accessibility":  (context) => AccesibilityScreen(),
-              "portfolio": (context) =>  const PortfolioScreen(),
+              "helpCenter": (context) => HelpCenterScreen(),
               "language": (context) => const LangaugeScreen(),
-              "about":  (context) => const EditAboutWidget(),
-              "profile": (context) => const ProfileScreen(),
+              "notification": (context) => NotificationScreen(),
+              "portfolio": (context) =>  PortfolioScreen(),
+              "privacyPolicy": (context) => PrivacyPolicyScreen(),
+              "termsAndConditions": (context) => TermsAndConditionsScreen(),
 
 
-              "two_stepVerification4": (context) =>  const Two_stepVerificationScreen4(),
-              "two_stepVerification5": (context) => const Two_stepVerificationScreen5(),
-              "two_stepVerification2": (context) => const Two_stepVerificationScreen2(),
-              "two_stepVerification3": (context) => const Two_stepVerificationScreen3(),
-              "two_stepVerification": (context) => const Two_stepVerificationScreen(),
               "loginAndSecurity": (context) => const LoginAndSecurityScreen(),
               "changePassword": (context) => const ChangePasswordScreen(),
+              "phoneNumber": (context) => const PhoneNumberScreen() ,
               "emailAddress": (context) =>  const EmailAddressScreen(),
-              "phoneNumber": (context) => const PhoneNumberScreen(),
+              "two_stepVerification": (context) => const Two_stepVerificationScreen(),
+              "two_stepVerification2": (context) => const Two_stepVerificationScreen2(),
 
             }),
       );

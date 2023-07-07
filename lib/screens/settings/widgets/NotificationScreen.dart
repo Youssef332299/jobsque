@@ -30,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed("profile");
                   },
                   icon: const Icon(Iconsax.arrow_left)),
               const SizedBox(

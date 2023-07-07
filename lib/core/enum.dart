@@ -1,2 +1,2 @@
 
-enum Status { init, loading, done, error, empty }
+enum ScreenStatus { init, loading, done, error, empty, notfuond }

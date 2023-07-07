@@ -5,28 +5,16 @@ import 'package:iconsax/iconsax.dart';
 import 'package:jobsque/screens/settings/provider/profileProvider.dart';
 import 'package:provider/provider.dart';
 import '../../../Core/app_colors.dart';
+import '../provider/profileState.dart';
 
+class PortfolioScreen extends StatelessWidget {
+  PortfolioScreen({super.key});
 
-class PortfolioScreen extends StatefulWidget {
-  const PortfolioScreen({super.key});
-
-  @override
-  State<PortfolioScreen> createState() => _PortfolioScreenState();
-}
-
-class _PortfolioScreenState extends State<PortfolioScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<ProfileProvider>().fill_isEditing_list(context);
-
-  }
+  ProfileState state = ProfileState();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SizedBox(
           height: 840,
@@ -42,7 +30,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   ),
                   IconButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed("profile");
                       },
                       icon: const Icon(Iconsax.arrow_left)),
                   const SizedBox(
@@ -83,7 +71,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 child: DottedBorder(
                   strokeWidth: 2,
                   borderType: BorderType.RRect,
-                  dashPattern: const [3.3,3.3],
+                  dashPattern: [3.3,3.3],
                   color: AppColors.primary500,
                   radius: const Radius.circular(10),
                   child: Column(
@@ -99,13 +87,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                               color: AppColors.primary100,
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: IconButton(
-                              onPressed: (){},
-                                icon: Icon(
+                            child: Icon(
                               Iconsax.document_upload5,
                               color: AppColors.primary500,
                               size: 35,
-                            ))),
+                            )),
                       ),
                       const SizedBox(
                         height: 20,
@@ -161,117 +147,91 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   ),
                 ),
               ),
-
-              Expanded(
-                child: SizedBox(
-                  height: 500,
-                  child: ListView.builder(
-                      itemCount: context.watch<ProfileProvider>().state.pdfFilesList.length,
-                      itemBuilder: (context, i) {
-                        return Container(
-                          height: 75,
-                          width: double.infinity,
-                          margin: const EdgeInsets.only(
-                              bottom: 18, left: 27, right: 27),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.neutral300, width: 1.4),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 22,
+              SizedBox(
+                height: 423,
+                child: ListView.builder(
+                    itemCount: 3,
+                    // itemCount: state.fileList.length,
+                    itemBuilder: (context, i) {
+                      return Container(
+                        height: 75,
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(
+                            bottom: 18, left: 27, right: 27),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.neutral300, width: 1.4),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 22,
+                            ),
+                            Image.asset(
+                              "assets/images/Pdf/pdf1.jpg",
+                              scale: 8.3,
+                            ),
+                            SizedBox(
+                              width: 210,
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 12,
+                                      ),
+                                      // Text(state.fileList[i]["name"],style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,color: AppColors.neutral900),),
+                                      Text(
+                                        'UI/UX Designer',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                            color: AppColors.neutral900),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 7),
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 12,
+                                      ),
+                                      // Text(state.fileList[i]["name"],style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12,color: AppColors.neutral500),),
+                                      Text(
+                                        'CV.pdf 300KB',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                            color: AppColors.neutral500),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Image.asset(
-                                "assets/images/Pdf/pdf1.jpg",
-                                scale: 8.3,
-                              ),
-                              SizedBox(
-                                width: 210,
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 18,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 12,
-                                        ),
-                                        context.watch<ProfileProvider>().state.isEditing[i]
-                                            ? SizedBox(
-                                              height: 20,
-                                              width: 160,
-                                             child: TextFormField(
-                                            decoration: const InputDecoration(
-                                              border: InputBorder.none,
-                                              focusedBorder: InputBorder.none,
-                                              enabledBorder: InputBorder.none,
-                                              errorBorder: InputBorder.none,
-                                              disabledBorder: InputBorder.none,
-                                            ),
-                                            autofocus: true,
-                                            // showCursor: true,
-                                            controller: context.watch<ProfileProvider>().state.edit_CV_NameController,
-                                            onEditingComplete: () {
-                                              context.read<ProfileProvider>().
-                                              saveCV_editing(Provider.of<ProfileProvider>(context, listen: false).state.edit_CV_NameController.text, i);
-                                            },
-                                          ),
-                                        )
-                                            : SizedBox(
-                                          height: 15,
-                                          width: 100,
-                                          child: Text(
-                                            context.watch<ProfileProvider>().state.pdfFilesList[i]["name"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: AppColors.neutral900),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 7),
-                                    Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 12,
-                                        ),
-                                        Text(
-                                          'CV.pdf ${context.watch<ProfileProvider>().state.pdfFilesList[i]["size"]}KB',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                              color: AppColors.neutral500),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              InkWell(
+                            ),
+                            InkWell(
+                              onTap: () {
+                                state.editFile(state.fileList[i]["name"]);
+                              },
+                              child: Icon(Iconsax.edit_2,
+                                  color: AppColors.primary500),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            InkWell(
                                 onTap: () {
-                                  context.read<ProfileProvider>().onTapEditCV_name(i);
+                                  state.deleteFile(state.fileList[i]);
                                 },
-                                child: Icon(Iconsax.edit_2,
-                                    color: AppColors.primary500),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              InkWell(
-                                  onTap: () {
-                                    context.read<ProfileProvider>().deleteFile(Provider.of<ProfileProvider>
-                                      (context, listen: false).state.pdfFilesList[i],i);
-                                  },
-                                  child: Icon(Iconsax.close_circle,
-                                      color: AppColors.danger500)),
-                            ],
-                          ),
-                        );
-                      }),
-                ),
+                                child: Icon(Iconsax.close_circle,
+                                    color: AppColors.danger500)),
+                          ],
+                        ),
+                      );
+                    }),
               ),
             ],
           ),
