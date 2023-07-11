@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:jobsque/screens/auth/provider/createAccountProvider.dart';
 import 'package:provider/provider.dart';
@@ -301,23 +302,9 @@ class CreateAccountScreen extends StatelessWidget {
                       width: 30,
                     ),
                     InkWell(
-                      onTap: (){},
-                      //   async {
-                      //   try {
-                      //     await _googleSignIn.signIn();
-                      //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-                      //     final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-                      //
-                      //     final String name = googleUser.displayName!;
-                      //     final String email = googleUser.email;
-                      //     String photoUrl = googleUser.photoUrl!;
-                      //
-                      //     print("name: $name");
-                      //
-                      //   } catch (error) {
-                      //     // Handle sign-in error
-                      //   }
-                      // },
+                      onTap: (){
+                        context.read<CreateAccountProvider>().googleSignIn(context);
+                        },
                       child: Container(
                           height: 48,
                           width: 150,

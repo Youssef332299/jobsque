@@ -9,6 +9,8 @@ class ProfileState {
   File? galleryImage;
   late File image;
 
+
+  bool loignByGmailOrFacebook = false;
   bool applicationReminders = false;
   bool applicationUpdate = false;
   bool jobsInterested = false;

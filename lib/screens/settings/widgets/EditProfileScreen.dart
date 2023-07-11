@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import '../../../core/app_colors.dart';
+import '../../auth/provider/createAccountProvider.dart';
 import '../provider/profileProvider.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -46,7 +47,11 @@ class EditProfileScreen extends StatelessWidget {
                         radius: 50,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: context.watch<ProfileProvider>().state.hasImage
+                          child: context.watch<ProfileProvider>().state.loignByGmailOrFacebook
+                              ? ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network("${Provider.of<CreateAccountProvider>(context, listen: false).state.photoUrl}"),)
+                              : context.watch<ProfileProvider>().state.hasImage
                               ? Image.file(context.watch<ProfileProvider>().state.image, width: 150, height: 150)
                               : Image.asset(
                               "assets/images/profile-picture/OIP1.jpeg"),

@@ -54,7 +54,7 @@ class EditAboutWidget extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 260,
+                  height: 200,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -63,11 +63,11 @@ class EditAboutWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 25, left: 25, top: 15),
                   child: Container(
                     width: 310,
-                    height: 260,
+                    height: 200,
                     alignment: Alignment.topCenter,
                     child: TextFormField(
                       maxLines: 7,
-                      maxLength:400,
+                      maxLength: 500,
                       autofocus: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: context.watch<ProfileProvider>().state.aboutController,

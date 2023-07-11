@@ -24,6 +24,7 @@ class _TypeOfWorkWidgetState extends State<TypeOfWorkWidget> {
     super.initState();
     context.read<ApplyNowProvider>().fill_radio_list(context);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

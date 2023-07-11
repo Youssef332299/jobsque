@@ -24,7 +24,6 @@ class HomeProvider extends ChangeNotifier {
   // home___________________________________________________
 
   void init(context) {
-
     Provider.of<ProfileProvider>(context, listen: false).getFileData();
     returnDataToHistory();
     fetchSuggestedData();
@@ -185,7 +184,7 @@ class HomeProvider extends ChangeNotifier {
 
   getSubmited() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    state. submited = await sharedPreferences.getBool("submited")!;
+    state.submited = await sharedPreferences.getBool("submited")!;
   }
 
 

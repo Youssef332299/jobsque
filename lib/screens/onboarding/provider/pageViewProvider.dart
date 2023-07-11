@@ -19,7 +19,7 @@ class PageViewProvider extends ChangeNotifier {
       var result = await InternetAddress.lookup("google.com");
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) { // If Is Online
         if (newCostumer == true) {
-          Navigator.of(context).pushNamed(Routes.login);
+          Navigator.of(context).pushNamed(Routes.bottomNavigation);
         } else {
           Navigator.of(context).pushNamed("pageView");
         }

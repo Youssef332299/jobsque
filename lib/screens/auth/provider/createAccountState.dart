@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class CreateAccountState {
   String? id;
@@ -8,11 +9,14 @@ class CreateAccountState {
   String? token;
   String? password;
   String? otp;
+  String? photoUrl;
 
   String confirmPassword = "";
   bool isHidden = true;
   bool isCheck = false;
+  bool isLoading = false;
 
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();

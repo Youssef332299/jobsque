@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:jobsque/Core/app_colors.dart';
+import 'package:jobsque/screens/auth/provider/createAccountProvider.dart';
 import 'package:jobsque/screens/home/provider/homeProvder.dart';
 import 'package:jobsque/screens/settings/provider/profileProvider.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,10 @@ class ProfileScreen extends StatelessWidget {
                               width: 105,
                             ),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed("login");
+                                  Provider.of<HomeProvider>(context, listen: false).state.indexSelect = 0;
+                                },
                                 icon: const Icon(
                                   Iconsax.logout_1,
                                   color: Colors.red,
@@ -69,13 +73,16 @@ class ProfileScreen extends StatelessWidget {
                     radius: 50,
                     child: CircleAvatar(
                         radius: 45,
-                        child: ClipRRect(
+                        child: context.watch<ProfileProvider>().state.loignByGmailOrFacebook
+                        ? ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network("${Provider.of<CreateAccountProvider>(context, listen: false).state.photoUrl}"),)
+                        : ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: context.watch<ProfileProvider>().state.hasImage
                               ? Image.file(context.watch<ProfileProvider>().state.image, width: 150, height: 150)
-                              : Image.asset(
-                              "assets/images/profile-picture/OIP1.jpeg"),
-                        )
+                              : Image.asset("assets/images/profile-picture/OIP1.jpeg"),
+                        ),
                     ),
                   ),
                 ),

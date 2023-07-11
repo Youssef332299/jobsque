@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jobsque/screens/applied/provider/appliedProvider.dart';
 import 'package:jobsque/screens/settings/provider/profileProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class ApplyNowProvider extends ChangeNotifier{
     state.isEditing = false;
     notifyListeners();
   }
+
   saveOtherFile_editing(){
     state.otherFile["name"] = state.edit_otherFileController.text;
     state.otherIsEditing = false;
@@ -83,7 +85,7 @@ class ApplyNowProvider extends ChangeNotifier{
     String? email = sharedPreferences.getString("emailValue");
     String? id = sharedPreferences.getString("idValue");
     String path = state.portfolioChocinData["path"];
-
+    // int i = Provider.of<AppliedProvider>(context, listen: false).state.applied.length -1;
 
       var url = Uri.parse(UrlRoutes.apply);
       var request = http.MultipartRequest('POST', url);
@@ -97,12 +99,12 @@ class ApplyNowProvider extends ChangeNotifier{
       request.fields['other_file'] = "${Provider.of<ApplyNowProvider>(context, listen: false).state.otherFile["name"]}";
       request.fields['job_id'] = "${Provider.of<HomeProvider>(context, listen: false).state.jobDataMap["id"]}";
       request.fields['user_id'] = "$id";
-
       var response = await request.send();
 
       if (response.statusCode == 200) {
         Navigator.of(context).pushNamed("applySuccesfullyWidget");
         Provider.of<HomeProvider>(context, listen: false).state.submited = true;
+        // Provider.of<AppliedProvider>(context, listen: false).state.uploadPortfolioCompleted[i] = true;
         sharedPreferences.setBool("submited", Provider.of<HomeProvider>(context, listen: false).state.submited);
       } else {
         print(response.statusCode);
@@ -119,6 +121,8 @@ class ApplyNowProvider extends ChangeNotifier{
   // typeOfWork ___________________________________________
   onTapNext_type_of_work(context){
     if(state.radio.contains(true)){
+      // int i = Provider.of<AppliedProvider>(context, listen: false).state.applied.length -1;
+      // Provider.of<AppliedProvider>(context, listen: false).state.typeOfWorkCompleted[i] = true;
       Navigator.of(context).pushNamed("uploadPortfolioWidget");
     }else{
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,6 +156,10 @@ class ApplyNowProvider extends ChangeNotifier{
   // bioData ___________________________________________
   onTapNext_bio_data(String email, context){
     if(state.usernameController.text.isNotEmpty && state.phoneController.text.isNotEmpty && email.isNotEmpty){
+      // Provider.of<AppliedProvider>(context, listen: false).state.bioDataCompleted.add(true);
+      // Provider.of<AppliedProvider>(context, listen: false).state.typeOfWorkCompleted.add(false);
+      // Provider.of<AppliedProvider>(context, listen: false).state.uploadPortfolioCompleted.add(false);
+      Provider.of<AppliedProvider>(context, listen: false).fetchJobsData();
       Navigator.of(context).pushNamed("typeOfWorkWidget");
     }else{
       ScaffoldMessenger.of(context).showSnackBar(
@@ -164,5 +172,4 @@ class ApplyNowProvider extends ChangeNotifier{
     state.usernameController.text = sharedPreferences.getString("usernameValue")!;
     state.phoneController.text = sharedPreferences.getString("mobileValue")!;
   }
-
 }

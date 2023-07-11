@@ -5,12 +5,6 @@ description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-
-
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-
 version: 1.0.0+1
 
 environment:
@@ -22,28 +16,30 @@ dependencies:
     sdk: flutter
 
 
-
-  #  flutter_login_facebook: ^1.8.0
-  #  flutter_facebook_auth: ^3.5.0
-  #  firebase_storage: ^11.2.4
-  #  google_sign_in: ^6.1.4
-  #  firebase_messaging: ^14.6.4
-#  firebase_auth: ^4.6.3
-#  cloud_firestore: ^4.8.2
-#  firebase_core: ^2.14.0
-
-
-  # Chat *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
-  #  jiffy: ^6.2.1
-  #  stream_chat_flutter_core: ^6.3.0
-  #  flutter_svg: ^0.23.0
-  #  stream_chat_flutter: ^6.3.0
-  #  stream_chat: ^6.3.0
+# Firebase *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+#  firebase_cloud_messaging_flutter: ^1.0.5
+#  flutter_facebook_auth: ^3.5.0
+#  firebase_messaging: ^14.6.4
+  firebase_storage: ^11.2.4
+  cloud_firestore: ^4.8.2
+  firebase_core: ^2.14.0
+  google_sign_in: ^6.1.4
+  firebase_auth: ^4.6.3
 
 
 
-  # Design *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+# Chat *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+  stream_chat_flutter_core: ^6.3.0
+  stream_chat: ^6.3.0
+  jiffy: ^6.2.1
+#  flutter_svg: ^0.23.0
+#  stream_chat_flutter: ^6.3.0
+
+
+
+# Design *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
   fading_edge_scrollview: ^3.0.0
+  percent_indicator: ^4.2.3
   cupertino_icons: ^1.0.2
   dotted_border: ^2.0.0+3
   hexcolor: ^3.0.1
@@ -52,7 +48,7 @@ dependencies:
   get: ^4.6.5
 
 
-  # Files  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+# Files  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
   country_code_picker: ^3.0.0
   permission_handler: ^10.2.0
   dropdown_search: ^5.0.6
@@ -68,12 +64,12 @@ dependencies:
 
 
 
-  # State Management *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+# State Management *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
   provider: ^6.0.5
   path_provider: ^2.0.15
 
 
-  # local database *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+# local database *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
   shared_preferences: ^2.1.1
 #  local_auth: ^2.1.6
 
@@ -89,7 +85,6 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
-# following page: https://dart.dev/tools/pub/pubspec
 
 flutter:
 
@@ -124,7 +119,6 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
 
 
-  # example:
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -136,5 +130,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
-  # see https://flutter.dev/custom-fonts/#from-packages

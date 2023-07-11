@@ -145,25 +145,20 @@ class ProfileProvider extends ChangeNotifier{
   }
 
 
-
   // portfolio________________________________
-  void addNewFile(context)async{
+  void addNewFile(context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     FilePickerResult? resultFile = await FilePicker.platform.pickFiles();
     String? token = sharedPreferences.getString("token");
     PlatformFile file = resultFile!.files.first;
 
-    int index = state.pdfFilesList.length;
-
     Map fileData= {
-      "name": "${file.name}",
+      "name": file.name,
       "size": "${file.size}",
       "path": "${file.path}",
     };
     String PDF = jsonEncode(fileData);
-
-
-    if (file.size < 10000001) { //10 MB
+    if (file.size < 1000001) { //10 MB
 
       var url = Uri.parse(UrlRoutes.addPortfolio);
       var request = http.MultipartRequest('POST', url);
@@ -174,16 +169,13 @@ class ProfileProvider extends ChangeNotifier{
       var response = await request.send();
 
          if (response.statusCode == 200) {
-             sharedPreferences.setString('PDF[$index]', PDF);
-               state.pdfFilesList.add(fileData);
-
+             sharedPreferences.setString('PDF[${state.pdfFilesList.length}]', PDF);
+             print(state.pdfFilesList.length);
+             state.pdfFilesList.add(fileData);
+             print(state.pdfFilesList.length);
                Navigator.of(context).pop();
-             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                  content: Text("File added successfully")));
-
-         }else {
-           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-               content: Text("Error..  max file size 10 MB")));
          }
     }else{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
