@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jobsque/screens/home/provider/homeProvder.dart';
+import 'package:jobsque/screens/settings/provider/profileProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Core/app_colors.dart';
+import '../../../Core/routes.dart';
 import '../../../Data/core/urlRoutes.dart';
 import 'createAccountState.dart';
 
@@ -239,6 +243,17 @@ class CreateAccountProvider extends ChangeNotifier {
       print("isSelected: $isSelected");
       notifyListeners();
     }
+  }
+
+  googleSignIn(context){
+    state.googleSignIn.signIn().then((value) {
+      Provider.of<HomeProvider>(context, listen: false).state.username = value!.displayName!;
+      state.photoUrl = value.photoUrl!;
+      state.email = value.email;
+    });
+    Provider.of<ProfileProvider>(context, listen: false).state.loignByGmailOrFacebook = true;
+    Navigator.of(context).pushNamed(Routes.bottomNavigation);
+    notifyListeners();
   }
 
 }

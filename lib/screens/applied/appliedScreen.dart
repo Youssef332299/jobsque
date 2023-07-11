@@ -50,7 +50,10 @@ class AppliedScreen extends StatelessWidget {
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(50),
             ),
-            child: Row(
+            child: context.watch<AppliedProvider>().state.applied.isEmpty || context.watch<AppliedProvider>().state.applied == null
+            || context.watch<AppliedProvider>().state.bioDataCompleted.isEmpty || context.watch<AppliedProvider>().state.typeOfWorkCompleted.isEmpty
+            || context.watch<AppliedProvider>().state.uploadPortfolioCompleted.isEmpty
+                ? Row(
               children: [
                 const SizedBox(
                   width: 70,
@@ -77,6 +80,35 @@ class AppliedScreen extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: Colors.white)),
+                ),
+              ],
+            )
+                : Row(
+              children: [
+                const SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  width: 165,
+                  height: 45,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary900,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Text("Active",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white)),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  "Rejected",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: AppColors.neutral500),
                 ),
               ],
             ),
@@ -145,304 +177,306 @@ class AppliedScreen extends StatelessWidget {
                     ),
                   )
                       : ListView.separated(
-                    // scrollDirection: Axis.horizontal,
                       itemCount: context.watch<AppliedProvider>().state.jobDetails.length,
                       itemBuilder: (ctx, i) {
-                        return Container(
-                            margin: const EdgeInsets.only(bottom: 5, top: 10),
-                            width: 360,
-                            height: 240,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Container(
-                                          height: 45,
-                                          width: 45,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(10),
-                                              color: Colors.white),
-                                          child: Image.asset(i % 2 == 0
-                                              ? "assets/images/twitte/twitte6.png"
-                                              : "assets/images/Zoom/zoom.png"),
-                                        ),
-                                      ],
-                                    ), //Image
-                                    Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: 15,
-                                            ),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              width: 200,
-                                              height: 25,
-                                              child: Text(
-                                                "${context.watch<AppliedProvider>().state.jobDetails[i]['name']}",
-                                                style: const TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                    color: Colors.black87),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          height: 15,
-                                          width: 200,
-                                          child: Text("   ${context.watch<AppliedProvider>().state.jobDetails[i]['location']}",
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black45),
+                        return InkWell(
+                          onTap: () => context.read<AppliedProvider>().onTapApplied(i, context),
+                          child: Container(
+                              margin: const EdgeInsets.only(bottom: 5, top: 10),
+                              width: 360,
+                              height: 240,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            height: 45,
+                                            width: 45,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(10),
+                                                color: Colors.white),
+                                            child: Image.asset(i % 2 == 0
+                                                ? "assets/images/twitte/twitte6.png"
+                                                : "assets/images/Zoom/zoom.png"),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
+                                        ],
+                                      ), //Image
+                                      Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                width: 200,
+                                                height: 25,
+                                                child: Text(
+                                                  "${context.watch<AppliedProvider>().state.jobDetails[i]['name']}",
+                                                  style: const TextStyle(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      color: Colors.black87),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            height: 15,
+                                            width: 200,
+                                            child: Text("   ${context.watch<AppliedProvider>().state.jobDetails[i]['location']}",
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black45),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
 
-                                    IconButton(
-                                      onPressed: () {
-                                        context.read<HomeProvider>().onTopRecentSaveIcon(i, context);
-                                      },
-                                      icon:
-                                      context.watch<HomeProvider>().state.iconRecent[i] ==
-                                          false
-                                          ? Icon(Iconsax.archive_minus,
-                                          color: AppColors.neutral900)
-                                          :
-                                      Icon(Iconsax.archive_minus5,
-                                          color: AppColors.primary500),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  children: [
-                                    const SizedBox(width: 20),
-                                    Container(
-                                      height: 35,
-                                      width: 78,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(30),
-                                          color: AppColors.primary100),
-                                      child: Text(
-                                        "${context.watch<AppliedProvider>().state.jobDetails[i]['job_time_type']}",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
+                                      IconButton(
+                                        onPressed: () {
+                                          context.read<HomeProvider>().onTopRecentSaveIcon(i, context);
+                                        },
+                                        icon:
+                                        context.watch<HomeProvider>().state.iconRecent[i] ==
+                                            false
+                                            ? Icon(Iconsax.archive_minus,
+                                            color: AppColors.neutral900)
+                                            :
+                                        Icon(Iconsax.archive_minus5,
                                             color: AppColors.primary500),
                                       ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Container(
-                                      height: 35,
-                                      width: 78,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(30),
-                                          color: AppColors.primary100),
-                                      child: Container(
-                                        height: 14,
-                                        width: 55,
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 20),
+                                      Container(
+                                        height: 35,
+                                        width: 78,
                                         alignment: Alignment.center,
-                                        child: Text("Remote",
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(30),
+                                            color: AppColors.primary100),
+                                        child: Text(
+                                          "${context.watch<AppliedProvider>().state.jobDetails[i]['job_time_type']}",
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.primary500),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const SizedBox(
-                                      width: 70,
-                                    ),
-                                    Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 15,
+                                      const SizedBox(width: 5),
+                                      Container(
+                                        height: 35,
+                                        width: 78,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(30),
+                                            color: AppColors.primary100),
+                                        child: Container(
+                                          height: 14,
+                                          width: 55,
+                                          alignment: Alignment.center,
+                                          child: Text("Remote",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.primary500),
+                                          ),
                                         ),
-                                        Text("Posted 2 days ago",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.neutral700),
-                                        ),
-                                      ],
-                                    ),
-                                    const Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 90,
-                                  margin: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: AppColors.neutral300,),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 25,),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      const SizedBox(
+                                        width: 70,
+                                      ),
                                       Column(
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(top: 15, bottom: 9),
-                                            alignment: Alignment.center,
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                color: context.watch<AppliedProvider>().state.bioDataCompleted
-                                                    ?AppColors.primary500
-                                                    :Colors.white,
-                                                borderRadius: BorderRadius.circular(50),
-                                                border: Border.all(
-                                                    color: context.watch<AppliedProvider>().state.bioDataCompleted
-                                                        ? AppColors.primary500
-                                                        : AppColors.neutral400
-                                                )
-                                            ),
-                                            child: Text("1",style: TextStyle(fontSize: 18,
-                                                color: context.watch<AppliedProvider>().state.bioDataCompleted
-                                                    ?Colors.white
-                                                    :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
+                                          const SizedBox(
+                                            height: 15,
                                           ),
-                                          Text("Biodata",style: TextStyle(fontSize: 12,
-                                              color: context.watch<AppliedProvider>().state.bioDataCompleted
-                                                  ?AppColors.primary500
-                                                  :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
+                                          Text("Posted 2 days ago",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.neutral700),
+                                          ),
                                         ],
                                       ),
-                                      Container(
-                                        height: 0,
-                                        width: 30,
-                                        margin: const EdgeInsets.only(top: 10, left: 25,right: 15),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: HexColor("#ECF2FF"),),
-                                        child: DottedBorder(
-                                          strokeWidth: 1.7,
-                                          borderType: BorderType.RRect,
-                                          dashPattern: const [3.0,3.9],
-                                          color: context.watch<AppliedProvider>().state.bioDataCompleted
-                                              ?AppColors.primary500
-                                              :AppColors.neutral400,
-                                          radius: const Radius.circular(10),
-                                          child: const SizedBox(),
-                                        ),
-                                      ),
-
-                                      Column(
+                                      const Column(
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(top: 15, bottom: 9),
-                                            alignment: Alignment.center,
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                color: context.watch<AppliedProvider>().state.typeOfWorkCompleted
-                                                    ?AppColors.primary500
-                                                    :Colors.white,
-                                                borderRadius: BorderRadius.circular(50),
-                                                border: Border.all(
-                                                    color: context.watch<AppliedProvider>().state.typeOfWorkCompleted
-                                                        ? AppColors.primary500
-                                                        : AppColors.neutral400
-                                                )
-                                            ),
-                                            child: Text("2",style: TextStyle(fontSize: 18,
-                                                color: context.watch<AppliedProvider>().state.typeOfWorkCompleted
-                                                    ?Colors.white
-                                                    :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
+                                          SizedBox(
+                                            height: 20,
                                           ),
-                                          Text("Type of work",style: TextStyle(fontSize: 12,
-                                              color: context.watch<AppliedProvider>().state.typeOfWorkCompleted
-                                                  ?AppColors.primary500
-                                                  :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
-                                        ],
-                                      ),
-                                      Container(
-                                        height: 0,
-                                        width: 30,
-                                        margin: const EdgeInsets.only(top: 10, left: 15),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: HexColor("#ECF2FF"),),
-                                        child: DottedBorder(
-                                          strokeWidth: 1.7,
-                                          borderType: BorderType.RRect,
-                                          dashPattern: const [3.0,3.9],
-                                          color: context.watch<AppliedProvider>().state.typeOfWorkCompleted
-                                              ?AppColors.primary500
-                                              :AppColors.neutral400,
-                                          radius: const Radius.circular(10),
-                                          child: const SizedBox(),
-                                        ),
-                                      ),
-
-                                      Column(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(top: 15, bottom: 9),
-                                            alignment: Alignment.center,
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted
-                                                    ?AppColors.primary500
-                                                    :Colors.white,
-                                                borderRadius: BorderRadius.circular(50),
-                                                border: Border.all(
-                                                    color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted
-                                                        ? AppColors.primary500
-                                                        : AppColors.neutral400
-                                                )
-                                            ),
-                                            child: Text("3",style: TextStyle(fontSize: 18,
-                                                color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted
-                                                    ?Colors.white
-                                                    :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
-                                          ),
-                                          Text("Upload portfolio",style: TextStyle(fontSize: 12,
-                                              color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted
-                                                  ?AppColors.primary500
-                                                  :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
                                         ],
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ));
+                                  Container(
+                                    height: 90,
+                                    margin: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: AppColors.neutral300,),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 25,),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 15, bottom: 9),
+                                              alignment: Alignment.center,
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  color: context.watch<AppliedProvider>().state.bioDataCompleted[i]
+                                                      ?AppColors.primary500
+                                                      :Colors.white,
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: context.watch<AppliedProvider>().state.bioDataCompleted[i]
+                                                          ? AppColors.primary500
+                                                          : AppColors.neutral400
+                                                  )
+                                              ),
+                                              child: Text("1",style: TextStyle(fontSize: 18,
+                                                  color: context.watch<AppliedProvider>().state.bioDataCompleted[i]
+                                                      ?Colors.white
+                                                      :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
+                                            ),
+                                            Text("Biodata",style: TextStyle(fontSize: 12,
+                                                color: context.watch<AppliedProvider>().state.bioDataCompleted[i]
+                                                    ?AppColors.primary500
+                                                    :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 0,
+                                          width: 30,
+                                          margin: const EdgeInsets.only(top: 10, left: 25,right: 15),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: HexColor("#ECF2FF"),),
+                                          child: DottedBorder(
+                                            strokeWidth: 1.7,
+                                            borderType: BorderType.RRect,
+                                            dashPattern: const [3.0,3.9],
+                                            color: context.watch<AppliedProvider>().state.bioDataCompleted[i]
+                                                ?AppColors.primary500
+                                                :AppColors.neutral400,
+                                            radius: const Radius.circular(10),
+                                            child: const SizedBox(),
+                                          ),
+                                        ),
+
+                                        Column(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 15, bottom: 9),
+                                              alignment: Alignment.center,
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  color: context.watch<AppliedProvider>().state.typeOfWorkCompleted[i]
+                                                      ?AppColors.primary500
+                                                      :Colors.white,
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: context.watch<AppliedProvider>().state.typeOfWorkCompleted[i]
+                                                          ? AppColors.primary500
+                                                          : AppColors.neutral400
+                                                  )
+                                              ),
+                                              child: Text("2",style: TextStyle(fontSize: 18,
+                                                  color: context.watch<AppliedProvider>().state.typeOfWorkCompleted[i]
+                                                      ?Colors.white
+                                                      :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
+                                            ),
+                                            Text("Type of work",style: TextStyle(fontSize: 12,
+                                                color: context.watch<AppliedProvider>().state.typeOfWorkCompleted[i]
+                                                    ?AppColors.primary500
+                                                    :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 0,
+                                          width: 30,
+                                          margin: const EdgeInsets.only(top: 10, left: 15),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: HexColor("#ECF2FF"),),
+                                          child: DottedBorder(
+                                            strokeWidth: 1.7,
+                                            borderType: BorderType.RRect,
+                                            dashPattern: const [3.0,3.9],
+                                            color: context.watch<AppliedProvider>().state.typeOfWorkCompleted[i]
+                                                ?AppColors.primary500
+                                                :AppColors.neutral400,
+                                            radius: const Radius.circular(10),
+                                            child: const SizedBox(),
+                                          ),
+                                        ),
+
+                                        Column(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 15, bottom: 9),
+                                              alignment: Alignment.center,
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted[i]
+                                                      ?AppColors.primary500
+                                                      :Colors.white,
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted[i]
+                                                          ? AppColors.primary500
+                                                          : AppColors.neutral400
+                                                  )
+                                              ),
+                                              child: Text("3",style: TextStyle(fontSize: 18,
+                                                  color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted[i]
+                                                      ?Colors.white
+                                                      :AppColors.neutral500,fontWeight: FontWeight.w400 ),),
+                                            ),
+                                            Text("Upload portfolio",style: TextStyle(fontSize: 12,
+                                                color: context.watch<AppliedProvider>().state.uploadPortfolioCompleted[i]
+                                                    ?AppColors.primary500
+                                                    :AppColors.neutral900,fontWeight: FontWeight.w400 ),),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        );
                       },
                       separatorBuilder: (BuildContext ctx, int i) {
                         return const Divider(

@@ -1,9 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:jobsque/screens/Messages/MessagesScreen.dart';
 import 'package:jobsque/screens/Messages/Widgets/UnreadWidget.dart';
 import 'package:jobsque/screens/Messages/Widgets/chatWidget.dart';
 import 'package:jobsque/screens/Messages/provider/MessagesProvider.dart';
 import 'package:jobsque/screens/applied/appliedScreen.dart';
 import 'package:jobsque/screens/applied/provider/appliedProvider.dart';
+import 'package:jobsque/screens/applied/widgets/appliedBioData.dart';
+import 'package:jobsque/screens/applied/widgets/appliedTypeOfWork.dart';
+import 'package:jobsque/screens/applied/widgets/appliedUploadPortfolio.dart';
 import 'package:jobsque/screens/applied/widgets/completeProfile.dart';
 import 'package:jobsque/screens/applied/widgets/education.dart';
 import 'package:jobsque/screens/applied/widgets/experience.dart';
@@ -66,10 +70,13 @@ import 'package:jobsque/screens/settings/widgets/login&Security/widgets/two_step
 import 'package:jobsque/screens/onboarding/widgets/checkNetwork.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -97,7 +104,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<MessagesProvider>(
               create: (context) => MessagesProvider()..init()),
           ChangeNotifierProvider<AppliedProvider>(
-              create: (context) => AppliedProvider()..init()),
+              create: (context) => AppliedProvider()..init(context)),
           ChangeNotifierProvider<SavedProvider>(
               create: (context)  => SavedProvider()..init()),
           ChangeNotifierProvider<PageViewProvider>(
@@ -106,6 +113,7 @@ class MyApp extends StatelessWidget {
               create: (context) => WorkProvider()),
         ],
         child: MaterialApp(
+          color: Colors.white,
           debugShowCheckedModeBanner: false,
 
             routes: {         
@@ -148,10 +156,15 @@ class MyApp extends StatelessWidget {
               "peopleWidget": (context) => const PeopleWidget() ,
 
 
+              "appliedUploadPortfolio": (context) => const AppliedUploadPortfolio(),
+              "appliedTypeOfWork": (context) => const AppliedTypeOfWork(),
               "completeProfile": (context) => const CompleteProfile(),
+              "appliedBioData": (context) => const AppliedBioData(),
               "applied":   (context)  => const AppliedScreen(),
               "experience": (context) => const Experience(),
               "education": (context) => const Education(),
+              "personalDetails": (context) => const Education(),
+              "appliedPortfolio": (context) => const Education(),
 
 
               "saved": (context) => const SavedScreen(),

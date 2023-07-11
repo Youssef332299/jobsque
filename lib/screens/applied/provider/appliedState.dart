@@ -1,9 +1,16 @@
-import '../../../core/enum.dart';
 
 class AppliedState {
+  int index = 0;
   List applied = [];
   List jobDetails = [];
-  bool bioDataCompleted = true;
-  bool typeOfWorkCompleted = false;
-  bool uploadPortfolioCompleted = false;
+  List<List> percent = [
+    [false],
+    [true],
+    [true],
+    [true],
+  ];
+  List<bool> bioDataCompleted = [true];
+  List<bool> typeOfWorkCompleted = [false];
+  List<bool> uploadPortfolioCompleted = [false];
+
 }
