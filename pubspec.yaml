@@ -1,0 +1,128 @@
+name: jobsque
+description: A new Flutter project.
+
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+# Firebase *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+#  firebase_cloud_messaging_flutter: ^1.0.5
+#  flutter_facebook_auth: ^3.5.0
+  firebase_messaging: ^14.6.4
+  firebase_storage: ^11.2.4
+  cloud_firestore: ^4.8.2
+  firebase_core: ^2.15.0
+  google_sign_in: ^6.1.4
+  firebase_auth: ^4.6.3
+
+
+
+# Chat *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+  stream_chat_flutter_core: ^6.3.0
+  grouped_list: ^5.1.2
+  stream_chat: ^6.3.0
+  intl: ^0.18.1
+  jiffy: ^6.2.1
+#  flutter_svg: ^0.23.0
+#  stream_chat_flutter: ^6.3.0
+
+
+
+# Design *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+  fading_edge_scrollview: ^3.0.0
+  percent_indicator: ^4.2.3
+  cupertino_icons: ^1.0.2
+  dotted_border: ^2.0.0+3
+  hexcolor: ^3.0.1
+  iconsax: ^0.0.8
+  timeago: ^3.4.0
+  sizer: ^2.0.15
+  get: ^4.6.5
+
+
+# Files  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*   *_*  *_*  *_*  *_*  *_*
+  country_code_picker: ^3.0.0
+  permission_handler: ^10.2.0
+  dropdown_search: ^5.0.6
+  url_launcher: ^6.1.11
+  image_picker: ^0.8.9
+  file_picker: 5.2.4
+  share: ^2.0.2
+#  flutter_sms: ^2.3.3
+# sms: ^0.2.4
+
+
+
+# State Management *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+  provider: ^6.0.5
+  path_provider: ^2.0.15
+
+
+# local database *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
+  shared_preferences: ^2.1.1
+#  local_auth: ^2.1.6
+
+
+  # Api *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*   *_*  *_*  *_*  *_*  *_*
+  http: ^0.13.6
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/createAccount/
+    - assets/images/app logo/
+    - assets/images/facebook/
+    - assets/images/appled/
+    - assets/images/google/
+    - assets/images/Slack/
+    - assets/images/twitte/
+    - assets/images/vector/
+    - assets/images/onboarding/
+    - assets/images/haveNotMessage/
+    - assets/images/Zoom/
+    - assets/images/Password Check/
+    - assets/images/flags/
+    - assets/images/Pdf/
+    - assets/images/profile-picture/
+    - assets/images/language flags/
+    - assets/images/not found/
+    - assets/images/dimes profile/
+    - assets/images/created Successfully/
+    - assets/images/Shoope Logo/
+
+
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
