@@ -337,33 +337,36 @@ class CreateAccountScreen extends StatelessWidget {
                     SizedBox(
                       width: 5.w,
                     ),
-                    Container(
-                        height: 6.h,
-                        width: 40.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                color: AppColors.neutral300, width: 1)),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 25,
-                            ),
-                            SizedBox(
-                              height: 2.4.h,
-                              child: Image.asset(
-                                  "assets/images/facebook/facebook-logo.png"),
-                            ),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              " Facebook",
-                              style: TextStyle(
-                                  fontSize: 10.7.sp, fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        )),
+                    InkWell(
+                      onTap: () => context.read<CreateAccountProvider>().signInWithFacebook(context),
+                      child: Container(
+                          height: 6.h,
+                          width: 40.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: AppColors.neutral300, width: 1)),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 25,
+                              ),
+                              SizedBox(
+                                height: 2.4.h,
+                                child: Image.asset(
+                                    "assets/images/facebook/facebook-logo.png"),
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Text(
+                                " Facebook",
+                                style: TextStyle(
+                                    fontSize: 10.7.sp, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          )),
+                    ),
                   ],
                 ), //google & facebook
               ],

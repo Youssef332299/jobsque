@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:jobsque/screens/home/provider/homeProvder.dart';
 import 'package:jobsque/screens/settings/provider/profileProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,6 +102,42 @@ class CreateAccountProvider extends ChangeNotifier {
           .showSnackBar(const SnackBar(content: Text("Error")));
       return false;
     }
+  }
+
+
+  // Future<UserCredential> signInWithFacebook() async {
+  //
+  //   final LoginResult loginResult = await FacebookAuth.instance.login();
+  //   final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+  //   return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  //
+  // }
+  Future<UserCredential> signInWithFacebook(context) async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+
+    User? user = userCredential.user;
+    if (user != null) {
+      state.photoUrl = user.photoURL ?? "";
+      state.email = user.email ?? "";
+      state.username = user.displayName ?? "";
+
+      if (await login(state.email, "password", context)) {
+        Navigator.of(context).pushNamed(Routes.bottomNavigation);
+      } else {
+        if (await createAccount(state.username, "password", state.email, context)) {
+          Navigator.of(context).pushNamed(Routes.bottomNavigation);
+        }
+      }
+    }
+
+    Provider.of<ProfileProvider>(context, listen: false).state.loignByGmailOrFacebook = true;
+
+    notifyListeners();
+
+    return userCredential;
   }
 
   googleSignIn(context){
@@ -264,5 +301,6 @@ class CreateAccountProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 }
 

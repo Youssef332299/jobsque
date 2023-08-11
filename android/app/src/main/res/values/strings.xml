@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JOBSQUE</string>
+    <string name="facebook_app_id">157141187405497</string>
+    <string name="fb_login_protocol_scheme">fbc5bc06de00df4fc9c7969ec98425a9fb</string>
+<!--    <string name="facebook_client_token">56789</string>-->
+</resources>

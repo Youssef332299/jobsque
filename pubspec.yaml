@@ -18,7 +18,7 @@ dependencies:
 
 # Firebase *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*
 #  firebase_cloud_messaging_flutter: ^1.0.5
-#  flutter_facebook_auth: ^3.5.0
+  flutter_facebook_auth: ^3.5.0
   firebase_messaging: ^14.6.4
   firebase_storage: ^11.2.4
   cloud_firestore: ^4.8.2
@@ -74,7 +74,7 @@ dependencies:
 #  local_auth: ^2.1.6
 
 
-  # Api *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*   *_*  *_*  *_*  *_*  *_*
+# Api *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*  *_*   *_*  *_*  *_*  *_*  *_*
   http: ^0.13.6
 
 
